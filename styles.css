@@ -22,7 +22,7 @@ main {
   background: #777;
 }
 
-.cell {
+.square {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,6 +39,6 @@ main {
   transition: background-color 0.2s;
 }
 
-.cell:hover {
+.square:hover {
   background: #ddd;
 }
