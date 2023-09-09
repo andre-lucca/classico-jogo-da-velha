@@ -1,6 +1,11 @@
 const squares = [...document.querySelectorAll('.square')]
+const actualPlayerDisplay = document.querySelector('.actual-player')
+const restartButton = document.querySelector('.restart')
 
+let gamingState = 'playing'
 let actualPlayer = 'X'
+
+actualPlayerDisplay.textContent = `Jogador atual: ${actualPlayer}`
 
 const winningCombinations = [
   [0, 1, 2],
@@ -27,6 +32,7 @@ function checkIfHasWinner() {
 
 function togglePlayer() {
   actualPlayer = actualPlayer === 'X' ? 'O' : 'X'
+  actualPlayerDisplay.textContent = `Jogador atual: ${actualPlayer}`
 }
 
 function setSquareState(state, square) {
@@ -49,9 +55,26 @@ function checkIfIsAllMarked() {
   return squares.every(square => getSquareState(square) === 'marked')
 }
 
+function setGamingState(state) {
+  gamingState = state
+}
+
+function resetGame() {
+  for (const square of squares) {
+    setSquareState('unmarked', square)
+    setSquareValue('', square)
+  }
+
+  actualPlayer = 'X'
+  actualPlayerDisplay.textContent = `Jogador atual: ${actualPlayer}`
+}
+
 for (const square of squares) {
   square.addEventListener('click', () => {
-    if (square.dataset.state === 'marked') {
+    if (
+      square.dataset.state === 'marked' ||
+      gamingState === 'finished'
+    ) {
       return
     }
 
@@ -59,9 +82,11 @@ for (const square of squares) {
     setSquareValue(actualPlayer, square)
 
     if (checkIfHasWinner()) {
+      setGamingState('finished')
       alert(`O jogador ${actualPlayer} ganhou!`)
       return
     } else if (checkIfIsAllMarked()) {
+      setGamingState('finished')
       alert('Deu velha!')
       return
     }
@@ -69,3 +94,8 @@ for (const square of squares) {
     togglePlayer()
   })
 }
+
+restartButton.addEventListener('click', () => {
+  resetGame()
+  setGamingState('playing')
+})
