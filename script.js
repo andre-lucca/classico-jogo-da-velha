@@ -99,3 +99,43 @@ restartButton.addEventListener('click', () => {
   resetGame()
   setGamingState('playing')
 })
+
+window.addEventListener('keydown', event => {
+  const keyMapping = {
+    'r': () => {
+      resetGame()
+      setGamingState('playing')
+    },
+    '1': () => {
+      squares[0].click()
+    },
+    '2': () => {
+      squares[1].click()
+    },
+    '3': () => {
+      squares[2].click()
+    },
+    '4': () => {
+      squares[3].click()
+    },
+    '5': () => {
+      squares[4].click()
+    },
+    '6': () => {
+      squares[5].click()
+    },
+    '7': () => {
+      squares[6].click()
+    },
+    '8': () => {
+      squares[7].click()
+    },
+    '9': () => {
+      squares[8].click()
+    }
+  }
+
+  if (keyMapping[event.key]) {
+    keyMapping[event.key]()
+  }
+})
